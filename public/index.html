@@ -22,16 +22,23 @@
 <div class="container-fluid">
 	<section class="row">
 		<article id="chatLogin" class="col-lg-4 col-lg-offset-4 text-center">
-			<p>Screen name</p>
-			<input type="text" />
-			<p>Avatar</p>
-			<!-- list of avatars to choose from -->
-			<span>Chat room</span>
-			<a href="/api/create">Enter</a>
+			<div>
+				<h3>Screen name</h3>
+				<input type="text" />
+			</div>
+			<div>
+				<h3>Avatar</h3>
+				<!-- list of avatars to choose from -->
+			</div>
+			<div>
+				<!--<span>Chat room</span>-->
+				<a href="/api/create">Enter</a>
+			</div>
 		</article>
 	</section>
 </div>
-<!-- load js here -->	
+<!-- load js here -->
+<script src="/socket.io/socket.io.js"></script>	
 <script src="js/script.js"></script>
 </body>
 </html>

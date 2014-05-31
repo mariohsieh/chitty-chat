@@ -37,11 +37,10 @@ body > header {
 	bottom: 0;
 	margin-top: auto;
 	margin-bottom: auto;
-	background-color: rgba(88,172,250,1);
 	height: 400px;
-	padding: 15px;
+	padding: 0;
 	box-shadow: 0 7px 10px #ACACAC;
-	color: #FFF;
+
 	font-size: 1.2em;
 	font-variant: small-caps;
 }
@@ -52,6 +51,27 @@ body > header {
 	background-color: #FFF;
 	text-decoration: none;
 }
+
+#chatLogin div:first-child, #chatLogin div:nth-child(2) {
+	height: 150px;
+}
+
+#chatLogin div:first-child, #chatLogin div:last-child {
+	background-color: rgba(88,172,250,1);
+	color: #FFF;
+}
+
+#chatLogin div:first-child {
+	box-shadow: 0 3px 5px #ACACAC;
+	padding: 48px 10px;
+}
+
+#chatLogin div:last-child {
+	height: 100px;
+	box-shadow: 0 -3px 5px #ACACAC;
+}
+
+
 
 /* large monitors */
 @media all and (min-width: 1200px) {
