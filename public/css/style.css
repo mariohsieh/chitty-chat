@@ -2,6 +2,7 @@
 
 /* for all screens */
 html {
+
 	font-family: "Andale Mono", Monaco, monospace;
 	/*font-family: "Avant Garde", Verdana, sans-serif;*/
 }
@@ -13,10 +14,43 @@ body > header {
 	background-color: #000;
 	color: #FFF;
 	padding: 2px 0;
+	box-shadow: 0 3px 7px #ACACAC;
 }
 
 .container-fluid > section:first-child {
 	margin-top: 30px;
+}
+
+#chatLogin {
+/*
+	position: relative;
+	top: 50%; 	
+	-o-transform: translateY(-50%);
+	-webkit-transform: translateY(50%);
+	-moz-transform: translateY(-50%);
+	transform: translateY(-50%);
+*/
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin-top: auto;
+	margin-bottom: auto;
+	background-color: rgba(88,172,250,1);
+	height: 400px;
+	padding: 15px;
+	box-shadow: 0 7px 10px #ACACAC;
+	color: #FFF;
+	font-size: 1.2em;
+	font-variant: small-caps;
+}
+
+#chatLogin a {
+	width: 100px;
+	height: 100px;
+	background-color: #FFF;
+	text-decoration: none;
 }
 
 /* large monitors */
