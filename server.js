@@ -10,6 +10,7 @@ var port = Number(process.env.PORT || 9009);		// set port number
 app.configure(function() {
 	app.set("view engine", "html");					// set .html as default template extension
 	app.set("views", __dirname + '/public/views');	// set template location
+	app.use(express.logger('dev'));					// log ever request to the console
 	app.use(express.static(__dirname + '/public'));	// sets files in public folder to public
 	
 	// optional //
