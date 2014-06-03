@@ -1,12 +1,18 @@
-/****** style.css ******/
+/*********** style.css ***********/
 
-/* for all screens */
+/***** for all screens ******/
 html {
 
 	font-family: "Andale Mono", Monaco, monospace;
 	/*font-family: "Avant Garde", Verdana, sans-serif;*/
 }
 
+/* class definitions */
+.pointer {
+	cursor: pointer;
+}
+
+/* index page */
 body > header {
 	position: fixed;
 	width: 100%;
@@ -18,9 +24,10 @@ body > header {
 }
 
 .container-fluid > section:first-child {
-	margin-top: 30px;
+	margin-top: 50px;
 }
 
+/* login screen */
 #chatLogin {
 /*
 	position: relative;
@@ -63,6 +70,17 @@ body > header {
 	padding: 10px 5px;
 }
 
+#chatLogin div:nth-child(2) li {
+	display: inline;
+}
+
+#chatLogin div:nth-child(2) img {	
+	width: 100px;
+	height: 100px;
+	margin: 0 10px;
+	box-shadow: 0 3px 5px #ACACAC;
+}
+	
 #chatLogin div:last-child {
 	height: 100px;
 	box-shadow: 0 -3px 5px #ACACAC;

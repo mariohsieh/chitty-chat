@@ -27,11 +27,19 @@
 </header>
 <div class="container-fluid">
 	<section class="row">
-		<article id="chatRoom" class="col-lg-12 text-center">
-			<p>chat room</p>
-				<input type="text" />
-				<br />
-				<button>Chat</button>
+		<article id="chatList" class="col-lg-2 col-lg-offset-2">
+			<!-- code for list of peeps in chat -->
+			<h2>chatters</h2>
+			<ul id="chatters">
+				<!-- members will dynamically be added here as <li> -->			
+			</ul>
+		</article>
+		<article id="chatRoom" class="col-lg-6">
+			<h2>chat log</h2>
+			<ul id="chatLog">
+				<!-- messages will dynamically be added here as <li> -->
+			</ul>
+			<input type="text" /><i class="pointer fa fa-pencil-square fa-3x"></i>
 			<br />
 			<a href="/">back to index</a>
 		</article>
