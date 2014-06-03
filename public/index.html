@@ -6,8 +6,19 @@
 	<title>Chitty Chat App</title>
 
 	<!-- link libs -->
-	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css" />	
+	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css" />
+	<script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="libs/jquery/dist/jquery.min.js"></script>
+
+
+	<!-- link to CDN here -->
+<!--	
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->		
 		
 	<!-- link css-->
 	<link rel="stylesheet" href="css/reset.css" />
@@ -24,7 +35,7 @@
 		<article id="chatLogin" class="col-lg-4 col-lg-offset-4 text-center">
 			<div>
 				<h3>Screen name</h3>
-				<input type="text" />
+				<input type="text" class="text-center" />
 			</div>
 			<div>
 				<h3>Avatar</h3>
@@ -32,7 +43,7 @@
 			</div>
 			<div>
 				<!--<span>Chat room</span>-->
-				<a href="/api/create">Enter</a>
+				<button>Enter</button>
 			</div>
 		</article>
 	</section>

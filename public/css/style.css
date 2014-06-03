@@ -45,25 +45,22 @@ body > header {
 	font-variant: small-caps;
 }
 
-#chatLogin a {
-	width: 100px;
-	height: 100px;
-	background-color: #FFF;
-	text-decoration: none;
-}
-
 #chatLogin div:first-child, #chatLogin div:nth-child(2) {
 	height: 150px;
 }
 
 #chatLogin div:first-child, #chatLogin div:last-child {
 	background-color: rgba(88,172,250,1);
-	color: #FFF;
+	color: #000;
 }
 
 #chatLogin div:first-child {
 	box-shadow: 0 3px 5px #ACACAC;
-	padding: 48px 10px;
+	padding: 37px 10px;
+}
+
+#chatLogin div:nth-child(2) {
+	padding: 10px 5px;
 }
 
 #chatLogin div:last-child {
@@ -71,7 +68,22 @@ body > header {
 	box-shadow: 0 -3px 5px #ACACAC;
 }
 
+#chatLogin input {
+	border: none;
+	height: 40px;
+	margin-top: 10px;
+	padding: 5px 10px;
+	font-variant: normal;
+}
 
+#chatLogin button {
+	width: 100px;
+	height: 50px;
+	background-color: #FFF;
+	text-decoration: none;
+	border: none;
+	margin: 25px 0;
+}
 
 /* large monitors */
 @media all and (min-width: 1200px) {
