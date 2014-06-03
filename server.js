@@ -3,7 +3,8 @@
 // dependencies //
 var express = require("express");
 	app = express(),
-	io = require("socket.io");
+	http = require('http').Server(app),
+	io = require("socket.io")(http);
 
 // configuration //
 var port = Number(process.env.PORT || 9009);		// set port number
@@ -20,6 +21,10 @@ app.configure(function() {
 	
 // routing //
 require('./routes')(app,io);
+
+// socket.io //
+require('./io')(app,io);
+
 
 // open server //
 io.listen(app.listen(port, function() {

@@ -1,0 +1,25 @@
+{
+  "name": "chitty-chat",
+  "version": "0.0.1",
+  "description": "real-time chat app in node.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mariohsieh/chitty-chat.git"
+  },
+  "author": "mario-hsieh <mariohsieh@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mariohsieh/chitty-chat/issues"
+  },
+  "engines": {
+	 "node": "0.10.x"
+  },
+  "dependencies": {
+	 "express": "~3.x",
+	 "socket.io": "~0.9.x"
+	}
+}
