@@ -30,7 +30,7 @@
 		<article id="chatLogin" class="col-lg-4 col-lg-offset-4 text-center">
 			<div>
 				<h3>Username</h3>
-				<input id="username" type="text" class="text-center" />
+				<input id="username" class="text-center" type="text" placeholder="Username" />
 			</div>
 			<div>
 				<h3>Avatar</h3>
@@ -38,7 +38,7 @@
 				<ul>					
 					<li><img class="pointer img-circle" data-name="tupac" src="img/tupac.jpg" /></li>
 					<li><img class="pointer img-circle" data-name="zayn" src="img/zayn.jpg" /></li>
-					<li><img class="pointer img-circle" data-name="marcel" src="img/tupac.jpg" /></li>
+					<!--<li><img class="pointer img-circle" data-name="marcel" src="img/tupac.jpg" /></li>-->
 				</ul>
 			</div>
 			<div>
@@ -56,11 +56,15 @@
 			</ul>
 		</article>
 		<article id="chatRoom" class="col-lg-6">
-			<h2>chat log</h2>
-			<ul id="chatLog">
-				<!-- messages will dynamically be added here as <li> -->
-			</ul>
-			<input type="text" /><i class="pointer fa fa-pencil-square fa-3x"></i>
+			<div class='row'>
+				<h2>chat log</h2>
+				<ul id="chatLog">
+					<!-- messages will dynamically be added here as <li> -->
+				</ul>
+			</div>
+			<div class='row'>
+				<textarea></textarea><i class="pointer fa fa-pencil-square fa-3x"></i>
+			</div>
 		</article>
 	</section>	
 </div>
