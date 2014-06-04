@@ -4,7 +4,7 @@ module.exports = function(app,io) {
 	app.get('/', function(req,res) {
 		res.sendfile('./public/index.html');
 	});
-	
+/*	
 	app.get('/api/create', function(req,res) {
 		// use random num to generate a unique chat room id
 		//var id = Math.round(Math.random()*999999);
@@ -17,5 +17,7 @@ module.exports = function(app,io) {
 	//app.get('/chat/:id', function(req,res) {
 	app.get('/chat', function(req,res) {
 		res.sendfile('./public/views/chat.html');
+		//res.sendfile('./public/index.html');
 	});
+*/ 
 }

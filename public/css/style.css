@@ -23,7 +23,7 @@ body > header {
 	box-shadow: 0 3px 7px #ACACAC;
 }
 
-.container-fluid > section:first-child {
+.container-fluid > section {
 	margin-top: 50px;
 }
 
@@ -52,41 +52,29 @@ body > header {
 	font-variant: small-caps;
 }
 
-#chatLogin div:first-child, #chatLogin div:nth-child(2) {
-	height: 150px;
-}
-
 #chatLogin div:first-child, #chatLogin div:last-child {
+	height: 120px;
 	background-color: rgba(88,172,250,1);
 	color: #000;
 }
 
 #chatLogin div:first-child {
-	box-shadow: 0 3px 5px #ACACAC;
-	padding: 37px 10px;
+	padding: 22px 10px;
 }
 
 #chatLogin div:nth-child(2) {
-	padding: 10px 5px;
+	height: 160px;
+	padding: 10px 0;
+	background-color: #FAFAFA;
+	box-shadow: inset 0 -3px 5px #ACACAC, inset 0 3px 5px #ACACAC;
 }
 
-#chatLogin div:nth-child(2) li {
-	display: inline;
-}
-
-#chatLogin div:nth-child(2) img {	
-	width: 100px;
-	height: 100px;
-	margin: 0 10px;
-	box-shadow: 0 3px 5px #ACACAC;
-}
-	
 #chatLogin div:last-child {
-	height: 100px;
-	box-shadow: 0 -3px 5px #ACACAC;
+	/*box-shadow: 0 -3px 5px #ACACAC;*/
 }
 
 #chatLogin input {
+	background-color: #FAFAFA;
 	border: none;
 	height: 40px;
 	margin-top: 10px;
@@ -94,13 +82,37 @@ body > header {
 	font-variant: normal;
 }
 
+#chatLogin ul {
+	margin: 10px 0;
+}
+
+#chatLogin li {
+	display: inline;
+}
+
+#chatLogin img {	
+	width: 80px;
+	height: 80px;
+	margin: 0 10px;
+	box-shadow: 0 3px 5px #ACACAC;
+	/*border: 3px solid rgba(0,0,0,0);*/
+}
+
+#chatLogin img:hover {
+	/*border: 3px solid rgba(88,172,250,1);*/
+}
+
 #chatLogin button {
 	width: 100px;
 	height: 50px;
-	background-color: #FFF;
+	background-color: #FAFAFA;
 	text-decoration: none;
 	border: none;
 	margin: 25px 0;
+}
+
+#chatPage {
+	display: none;
 }
 
 /* large monitors */

@@ -18,7 +18,7 @@ app.configure(function() {
 	//app.engine('html', require(***).renderFile);	// sets html templating engine
 	//io.set('log level', 1);						// hide log messages from socke.io
 });
-	
+
 // routing //
 require('./routes')(app,io);
 
@@ -30,3 +30,6 @@ require('./io')(app,io);
 io.listen(app.listen(port, function() {
 	console.log("Listening on " + port);
 }));
+
+
+
