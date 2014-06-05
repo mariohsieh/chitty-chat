@@ -44,9 +44,20 @@ $(document).ready(function() {
 	
  
 	//***** event listeners *****//
-	
+/*
+	// avatar mouseover
+	$(document).on("mouseover", "#chatLogin img", function() {
+		$(this).next().css("background-color", "#000");
+	});
+
+	$(document).on("mouseout", "#chatLogin img", function() {
+		$(this).next().css("background-color", "#FAFAFA");
+	});
+*/
 	//set avatar
 	$(document).on("click", "#chatLogin img", function() {
+		$("#chatLogin li div").removeClass("active");
+		$(this).next().addClass("active");
 		user.avatar = $(this).attr("data-name");
 	});
 	

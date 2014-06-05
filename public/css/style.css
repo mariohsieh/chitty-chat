@@ -10,6 +10,7 @@ html {
 }
 
 img {	
+	/*display: inline-block;*/
 	width: 80px;
 	height: 80px;
 	margin: 0 10px;
@@ -17,9 +18,14 @@ img {
 	/*border: 3px solid rgba(0,0,0,0);*/
 }
 
+
 /* class definitions */
 .pointer {
 	cursor: pointer;
+}
+
+.active {
+	background-color: #000;
 }
 
 /* index page */
@@ -64,25 +70,24 @@ body > header {
 	font-variant: small-caps;
 }
 
-
-#chatLogin div:first-child, #chatLogin div:last-child {
+#chatLogin > div:first-child, #chatLogin > div:last-child {
 	height: 120px;
 	background-color: rgba(88,172,250,1);
 	color: #000;
 }
 
-#chatLogin div:first-child {
+#chatLogin > div:first-child {
 	padding: 22px 10px;
 }
 
-#chatLogin div:nth-child(2) {
+#chatLogin > div:nth-child(2) {
 	height: 160px;
 	padding: 10px 0;
 	background-color: #FAFAFA;
 	/*box-shadow: inset 0 -3px 5px #ACACAC, inset 0 3px 5px #ACACAC;*/
 }
 
-#chatLogin div:last-child {
+#chatLogin > div:last-child {
 	/*box-shadow: 0 -3px 5px #ACACAC;*/
 }
 
@@ -90,9 +95,10 @@ body > header {
 	background-color: #FAFAFA;
 	border: none;
 	height: 40px;
-	margin-top: 10px;
 	padding: 5px 10px;
 	font-variant: normal;
+	margin: 20px 0;
+	vertical-align: top;
 }
 
 #chatLogin ul {
@@ -100,11 +106,18 @@ body > header {
 }
 
 #chatLogin li {
-	display: inline;
+	display: inline-block;
 }
 
 #chatLogin img:hover {
 	/*border: 3px solid rgba(88,172,250,1);*/
+}
+
+#chatLogin li div {
+	height: 5px;
+	width: 70px;
+	margin: 10px 15px 0;
+	/*background-color: green;*/
 }
 
 #chatLogin button {
