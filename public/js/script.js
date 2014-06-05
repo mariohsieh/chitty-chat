@@ -27,7 +27,7 @@ $(document).ready(function() {
 		$("#chatters").append("<li id='"+data.name+"'>"+data.name+"</li>");
 		
 		// show in log that someone joined
-		$("#chatLog").append("<li class='admin text-center'>***"+data.name+" just joined***</li>");
+		$("#chatLog").append("<li class='admin text-center'>*** "+data.name+" just joined ***</li>");
 	});	
 	
 	// show message in chat log
@@ -44,7 +44,7 @@ $(document).ready(function() {
 	
 	// user leaves
 	socket.on('userLeft', function(data) {
-		$("#chatLog").append("<li class='admin text-center'>***"+data+" just left***</li>");
+		$("#chatLog").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
 		$("#"+data).remove();
 	});
  
@@ -77,23 +77,41 @@ $(document).ready(function() {
 			socket.emit("login", user);					// send user info to server
 			$("#loginPage").css("display", "none");		// hide login screen
 			$("#chatPage").css("display", "block");		// show chat screen
+			$("footer").css("display", "block");		// show chat input
 			//window.location = "/api/create";
 			$("#username").val('');						// clear username;
 		}
 	});
 
 	// send message
-	$(document).on("click", "#chatRoom i", function() {
-		user.msg = $('#chatRoom textarea').val();
-		//console.log(user);
-		// emit message to server
-		//socket.emit('chatMessage', $('#chatRoom input').val());
-		socket.emit('chatMessage', user);
-		// clear input box after send
-		$('#chatRoom textarea').val('');
-		// broadcast message to all
+	$(document).on("click", "footer i", function() {
+		user.msg = $('footer textarea').val().trim();
+		console.log(user.msg);
+		if (user.msg != '') {
+			// emit message to server
+			socket.emit('chatMessage', user);
+			// clear input box after send
+			$('footer textarea').val('');
+		}
 	});
-
+/*
+	// message input rollover
+	$(document).on("mouseover", "footer", function() {
+		$("footer > i").css("display", "none");
+		$("footer > section").fadeIn("fast");
+	});
+	$(document).on("mouseout", "footer", function() {
+		$("footer > i").fadeIn("fast");
+		$("footer > section").css("display", "none");
+	});	
+*/	
+	/*** animation events ***/
+/*	
+	$("footer").one("transitionend webkitTransitionEnd", function(evt) {
+		$("footer > i").css("display", "none");
+		$("footer > section").css("display", "inherit");
+	});
+*/ 
 });
 
 
