@@ -16,15 +16,15 @@ $(document).ready(function() {
 			//alert(users[0].name);
 			//$("#chatters").append("<li>"+users[i].name+"</li>");
 		//}
- 		$("#chatters").append("<li>"+user.name+"</li>");
+ 		$("#chatters").append("<li id='"+user.name+"'>"+user.name+"</li>");
 	});
 	
-	// new user to add to chat
+	// new user joined the chat
 	socket.on('addUser', function(data) {
 		//console.log(data.name);
 		//console.log(data.avatar);
 		// add name to members list
-		$("#chatters").append("<li>"+data.name+"</li>");
+		$("#chatters").append("<li id='"+data.name+"'>"+data.name+"</li>");
 		
 		// show in log that someone joined
 		$("#chatLog").append("<li class='admin text-center'>***"+data.name+" just joined***</li>");
@@ -42,6 +42,11 @@ $(document).ready(function() {
 			$("#chatLog").append("<li class='receive pull-left'><img class='img-circle' src='img/"+data.avatar+".jpg' /><div><p>"+data.msg+"</p><p>"+data.name+"</p></div></li>");
 	});
 	
+	// user leaves
+	socket.on('userLeft', function(data) {
+		$("#chatLog").append("<li class='admin text-center'>***"+data+" just left***</li>");
+		$("#"+data).remove();
+	});
  
 	//***** event listeners *****//
 /*

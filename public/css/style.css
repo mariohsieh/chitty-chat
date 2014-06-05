@@ -160,7 +160,9 @@ body > header {
 }
 
 #chatRoom textarea {
+	border: none;
 	resize: none;
+	height: 150px;
 }
 
 .admin {

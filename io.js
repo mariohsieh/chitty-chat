@@ -12,16 +12,17 @@ module.exports = function(app,io) {
 
 		// on newUser
 		socket.on('login', function(data) {
-			user = data;
-			allUsers.push(user);
+			socket.user = data;
+			//user = data;
+			allUsers.push(socket.user);
 			console.log(allUsers);
 			totalUsers = allUsers.length;
 			
 			// code to display existing users to new client
 			socket.emit('displayUsers', allUsers);
 
-			// broadcast to all execept new client
-			socket.broadcast.emit('addUser', user);
+			// broadcast new user info to all execept new client 
+			socket.broadcast.emit('addUser', socket.user);
 			//io.emit('addUser', user);
 		});
 		
@@ -35,7 +36,12 @@ module.exports = function(app,io) {
 
 		// on disconnect
 		socket.on('disconnect', function() {
-			console.log('user disconnected');
+			if (socket.user) {
+				console.log(socket.user.name + ' disconnected');
+				socket.broadcast.emit('userLeft', socket.user.name);
+			} else 
+				console.log('a user disconnected');
+
 		});
 		
 	});
