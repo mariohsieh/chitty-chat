@@ -67,7 +67,7 @@ body > header {
 	box-shadow: 0 7px 10px #ACACAC;
 
 	font-size: 1.2em;
-	font-variant: small-caps;
+	/*font-variant: small-caps;*/
 }
 
 /*
@@ -115,7 +115,8 @@ body > header {
 }
 
 #chatLogin ul {
-	margin: 10px 0;
+	margin: 21px 0;
+	height: 98px;
 }
 
 #chatLogin li {
