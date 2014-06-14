@@ -70,6 +70,19 @@ body > header {
 	font-variant: small-caps;
 }
 
+/*
+#chatLogin li:hover::after {
+	position: absolute;
+	bottom: 250px;
+	width: 100px;
+	height: 30px;
+	content: attr(data-name);
+	background-color: #FFF;
+
+	font-variant: normal;
+}
+*/
+
 #chatLogin > div:first-child, #chatLogin > div:last-child {
 	height: 120px;
 	background-color: rgba(88,172,250,1);
@@ -126,8 +139,9 @@ body > header {
 	background-color: #FAFAFA;
 	text-decoration: none;
 	border: none;
-	margin: 25px 0;
+	margin: 35px 0;
 }
+
 
 /***** chat page *****/
 
@@ -142,6 +156,7 @@ body > header {
 .send, .receive {
 	clear: both;
 	margin: 5px 0;
+	/*display: none;*/
 }
 
 #chatLog div {
@@ -159,6 +174,15 @@ body > header {
 	word-wrap: break-word;
 }
 
+#chatLog p:first-child {
+	min-height: 56px;
+}
+
+#chatLog p:last-child {
+	vertical-align: baseline;
+	color: rgb(88,172,250);
+}
+
 #chatRoom i {
 	vertical-align: top;
 }
@@ -171,6 +195,7 @@ body > header {
 
 
 /*****  chat input *****/
+
 body > footer {
 	position: fixed;
 	bottom: 0;

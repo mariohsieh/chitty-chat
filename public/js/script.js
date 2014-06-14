@@ -12,11 +12,10 @@ $(document).ready(function() {
 	socket.on('displayUsers', function(data) {
 		var users = data;
 		var length = data.length;
-		//for (var i=0;i<length;i++) {
-			//alert(users[0].name);
-			//$("#chatters").append("<li>"+users[i].name+"</li>");
-		//}
- 		$("#chatters").append("<li id='"+user.name+"'>"+user.name+"</li>");
+		for (var i=0;i<length;i++) {
+			$("#chatters").append("<li id='"+users[i].name+"'>"+users[i].name+"</li>");
+		}
+ 		//$("#chatters").append("<li id='"+user.name+"'>"+user.name+"</li>");
 	});
 	
 	// new user joined the chat
@@ -37,9 +36,10 @@ $(document).ready(function() {
 		//console.log(data.avatar);
 		//console.log(user.name);
 		if (data.name == user.name)
-			$("#chatLog").append("<li class='send pull-right'><div><p>"+data.msg+"</p><p>"+data.name+"</p></div><img class='img-circle' src='img/"+data.avatar+".jpg' /></li>");
+			$("#chatLog").append("<li class='send pull-right'><div><p class='text-right'>"+data.msg+"</p><p class='text-right'>"+data.name+"</p></div><img class='img-circle' src='img/"+data.avatar+".jpg' /></li>");
 		else
 			$("#chatLog").append("<li class='receive pull-left'><img class='img-circle' src='img/"+data.avatar+".jpg' /><div><p>"+data.msg+"</p><p>"+data.name+"</p></div></li>");
+		//$("#chatLog").lastChild().fadeIn(1000);
 	});
 	
 	// user leaves
@@ -64,6 +64,8 @@ $(document).ready(function() {
 		$("#chatLogin li div").removeClass("active");
 		$(this).next().addClass("active");
 		user.avatar = $(this).attr("data-name");
+		console.log(user.avatar);
+		$('#username').val(user.avatar);
 	});
 	
 	// login user
@@ -86,7 +88,7 @@ $(document).ready(function() {
 	// send message
 	$(document).on("click", "footer i", function() {
 		user.msg = $('footer textarea').val().trim();
-		console.log(user.msg);
+		//console.log(user.msg);
 		if (user.msg != '') {
 			// emit message to server
 			socket.emit('chatMessage', user);
@@ -94,6 +96,7 @@ $(document).ready(function() {
 			$('footer textarea').val('');
 		}
 	});
+	
 /*
 	// message input rollover
 	$(document).on("mouseover", "footer", function() {
@@ -106,12 +109,20 @@ $(document).ready(function() {
 	});	
 */	
 	/*** animation events ***/
-/*	
-	$("footer").one("transitionend webkitTransitionEnd", function(evt) {
-		$("footer > i").css("display", "none");
-		$("footer > section").css("display", "inherit");
+
+	
+	$("footer").on("transitionend webkitTransitionEnd oTransitionEnd", function() {
+		var hovered = $("footer").css("height");		
+		if (hovered == "150px") {
+			$("footer > i").css("display", "none");
+			$("footer > section").css("display", "inherit");
+		} else {
+			$("footer > i").css("display", "inherit");
+			$("footer > section").css("display", "none");
+		}
+		
 	});
-*/ 
+
 });
 
 
