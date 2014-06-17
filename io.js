@@ -24,7 +24,7 @@ module.exports = function(app,io) {
 			socket.emit('welcomeUser', onlineUsers);
 
 			// broadcast new user info to all execept new client 
-			socket.broadcast.emit('addUser', socket.user);
+			socket.broadcast.emit('addUser', socket.user.name);
 			//io.emit('addUser', user);
 		});
 		
@@ -44,9 +44,11 @@ module.exports = function(app,io) {
 				onlineUsers.splice(index,1);
 				console.log(onlineUsers);
 
-				// broadcast to all that user left								
-				console.log(socket.user.name + ' disconnected');
+				// broadcast to all clients that user left								
 				socket.broadcast.emit('userLeft', socket.user.name);
+				
+				// server log that user left
+				console.log(socket.user.name + ' disconnected');
 			} else 
 				console.log('a user disconnected');
 

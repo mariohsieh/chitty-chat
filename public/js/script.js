@@ -7,20 +7,29 @@ $(document).ready(function() {
 	// load socket.io on client side, connect to server
 	var socket = io();					
 	socket.on('initial', function(data) {
-			console.log(data);
+			// console.log(data);
+			// make all taken users inactive for login screen
+			var length = data.length;
+			for (var i=0;i<length;i++) {
+				$("img[data-name='"+data[i]+"']").addClass("inactive");
+			}
 	});
 
 	// display all users chatting upon login
 	socket.on('welcomeUser', function(data) {
-/*		var users = data;
+		var users = data;
 		var length = data.length;
-
+/*
 		for (var i=0;i<length;i++) {
 			$("#chatters").append("<li id='"+users[i].name+"'>"+users[i].name+"</li>");
 			console.log(users[i].name);
 		}
 */ 		//$("#chatters").append("<li id='"+user.name+"'>"+user.name+"</li>");
- 		
+
+		for (var i=0;i<length;i++) {
+			$("#"+data[i]).addClass("online");
+		}
+			
 	});
 	
 	// new user joined the chat
@@ -31,11 +40,12 @@ $(document).ready(function() {
 		// add name to members list
 		//$("#chatters").append("<li id='"+data.name+"'>"+data.name+"</li>");
 		if (user.name) {
-			// show in log that someone joined
-			$("#chatLog").append("<li class='admin text-center'>*** "+data.name+" just joined ***</li>");
+			// show in chat log that someone joined
+			$("#chatLog").append("<li class='admin text-center'>*** "+data+" just joined ***</li>");
+			$("#"+data).addClass("online");
 		} else {
-			//$("img").attr("data-name", data.name).addClass("inactive");
-			$("#"+data.name).addClass("inactive");
+			// on login screen, make user available
+			$("img[data-name='"+data+"']").addClass("inactive");
 		}
 	});	
 	
@@ -55,9 +65,9 @@ $(document).ready(function() {
 	socket.on('userLeft', function(data) {
 		if (user.name) {
 			$("#chatLog").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
-			$("#"+data).remove();
+			$("#"+data).removeClass("online");
 		} else {
-			$("#"+data).removeClass("inactive");
+			$("img[data-name='"+data+"']").removeClass("inactive");
 		}
 	});
  
@@ -78,7 +88,7 @@ $(document).ready(function() {
 		if (!$(this).hasClass('inactive')) {
 			$("#chatLogin li div").removeClass("active");
 			$(this).next().addClass("active");
-			user.name = $(this).attr("id");
+			user.name = $(this).attr("data-name");
 			console.log(user.name);
 			$('#username').val(user.name);
 		}
