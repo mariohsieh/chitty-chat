@@ -28,6 +28,11 @@ img {
 	background-color: #000;
 }
 
+.inactive {
+	opacity: .5;
+	cursor: inherit;
+}
+
 /* index page */
 body > header {
 	position: fixed;
@@ -64,7 +69,7 @@ body > header {
 	margin-bottom: auto;
 	height: 400px;
 	padding: 0;
-	box-shadow: 0 7px 10px #ACACAC;
+	box-shadow: 0 0 35px 5px rgba(0,0,0,.25);
 
 	font-size: 1.2em;
 	/*font-variant: small-caps;*/
@@ -104,7 +109,7 @@ body > header {
 	/*box-shadow: 0 -3px 5px #ACACAC;*/
 }
 
-#chatLogin input {
+#chatLogin #username {
 	background-color: #FAFAFA;
 	border: none;
 	height: 40px;
@@ -148,6 +153,15 @@ body > header {
 
 #chatPage {
 	display: none;
+}
+
+#chatters li {
+	opacity: .75;
+}
+
+.loggedOn {
+	opacity: 1.0 !important;
+	font-weight: bold;
 }
 
 #chatLog img, #chatLog div {

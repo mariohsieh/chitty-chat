@@ -3,49 +3,62 @@
 $(document).ready(function() {
 	// declare variables & initial settings
 	var user = {};	// object to hold new user information	
-	//var sender;		// boolean for message type
 	
-	// load socket.io on client side, connects to server
+	// load socket.io on client side, connect to server
 	var socket = io();					
+	socket.on('initial', function(data) {
+			console.log(data);
+	});
 
 	// display all users chatting upon login
-	socket.on('displayUsers', function(data) {
-		var users = data;
+	socket.on('welcomeUser', function(data) {
+/*		var users = data;
 		var length = data.length;
+
 		for (var i=0;i<length;i++) {
 			$("#chatters").append("<li id='"+users[i].name+"'>"+users[i].name+"</li>");
+			console.log(users[i].name);
 		}
- 		//$("#chatters").append("<li id='"+user.name+"'>"+user.name+"</li>");
+*/ 		//$("#chatters").append("<li id='"+user.name+"'>"+user.name+"</li>");
+ 		
 	});
 	
 	// new user joined the chat
 	socket.on('addUser', function(data) {
 		//console.log(data.name);
 		//console.log(data.avatar);
+
 		// add name to members list
-		$("#chatters").append("<li id='"+data.name+"'>"+data.name+"</li>");
-		
-		// show in log that someone joined
-		$("#chatLog").append("<li class='admin text-center'>*** "+data.name+" just joined ***</li>");
+		//$("#chatters").append("<li id='"+data.name+"'>"+data.name+"</li>");
+		if (user.name) {
+			// show in log that someone joined
+			$("#chatLog").append("<li class='admin text-center'>*** "+data.name+" just joined ***</li>");
+		} else {
+			//$("img").attr("data-name", data.name).addClass("inactive");
+			$("#"+data.name).addClass("inactive");
+		}
 	});	
 	
 	// show message in chat log
 	socket.on('chatMessage', function(data) {
-		//$("#chatLog").append("<li>"+msg+"</li>");
 		//console.log(data.name);
 		//console.log(data.avatar);
 		//console.log(user.name);
 		if (data.name == user.name)
-			$("#chatLog").append("<li class='send pull-right'><div><p class='text-right'>"+data.msg+"</p><p class='text-right'>"+data.name+"</p></div><img class='img-circle' src='img/"+data.avatar+".jpg' /></li>");
+			$("#chatLog").append("<li class='send pull-right'><div><p class='text-right'>"+data.msg+"</p><p class='text-right'>"+data.name+"</p></div><img class='img-circle' src='img/"+data.name+".jpg' /></li>");
 		else
-			$("#chatLog").append("<li class='receive pull-left'><img class='img-circle' src='img/"+data.avatar+".jpg' /><div><p>"+data.msg+"</p><p>"+data.name+"</p></div></li>");
+			$("#chatLog").append("<li class='receive pull-left'><img class='img-circle' src='img/"+data.name+".jpg' /><div><p>"+data.msg+"</p><p>"+data.name+"</p></div></li>");
 		//$("#chatLog").lastChild().fadeIn(1000);
 	});
 	
 	// user leaves
 	socket.on('userLeft', function(data) {
-		$("#chatLog").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
-		$("#"+data).remove();
+		if (user.name) {
+			$("#chatLog").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
+			$("#"+data).remove();
+		} else {
+			$("#"+data).removeClass("inactive");
+		}
 	});
  
 	//***** event listeners *****//
@@ -59,31 +72,34 @@ $(document).ready(function() {
 		$(this).next().css("background-color", "#FAFAFA");
 	});
 */
+
 	//set avatar
 	$(document).on("click", "#chatLogin img", function() {
-		$("#chatLogin li div").removeClass("active");
-		$(this).next().addClass("active");
-		user.avatar = $(this).attr("data-name");
-		console.log(user.avatar);
-		$('#username').val(user.avatar);
+		if (!$(this).hasClass('inactive')) {
+			$("#chatLogin li div").removeClass("active");
+			$(this).next().addClass("active");
+			user.name = $(this).attr("id");
+			console.log(user.name);
+			$('#username').val(user.name);
+		}
 	});
+	
 	
 	// login user
 	$(document).on("click", "#chatLogin button", function() {
-		user.name = $("#username").val().trim();
-		if (user.name == "") {
-			alert("Please input a valid username.");
-		} else if (!user.avatar) {
-			alert("Please select an avatar.");
-		} else {
+		//user.name = $("#username").val().trim();
+		if (!user.name)
+			alert("please select a user");
+		else {
+			$("#chatRoom").prepend("<h2>chat log - " + user.name + "</h2>");
 			socket.emit("login", user);					// send user info to server
 			$("#loginPage").css("display", "none");		// hide login screen
 			$("#chatPage").css("display", "block");		// show chat screen
 			$("footer").css("display", "block");		// show chat input
-			//window.location = "/api/create";
 			$("#username").val('');						// clear username;
 		}
 	});
+
 
 	// send message
 	$(document).on("click", "footer i", function() {
@@ -108,9 +124,8 @@ $(document).ready(function() {
 		$("footer > section").css("display", "none");
 	});	
 */	
-	/*** animation events ***/
 
-	
+	/*** animation events ***/
 	$("footer").on("transitionend webkitTransitionEnd oTransitionEnd", function() {
 		var hovered = $("footer").css("height");		
 		if (hovered == "150px") {

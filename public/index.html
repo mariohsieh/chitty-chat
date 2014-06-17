@@ -37,13 +37,17 @@
 				<!-- list of avatars to choose from -->
 				<ul>					
 					<li>
-						<img class="pointer img-circle" src="img/tupac.jpg" data-name="tupac" />
+						<img id="tupac" class="pointer img-circle" src="img/tupac.jpg" />
 						<div>&nbsp;</div>
 					</li>
 					<li>
-						<img class="pointer img-circle" src="img/zayn.jpg"  data-name="zayn" />
+						<img id="zayn" class="pointer img-circle" src="img/zayn.jpg" />
 						<div>&nbsp;</div>
 					</li>
+					<li>
+						<img id="biggie" class="pointer img-circle" src="img/biggie.jpg" />
+						<div>&nbsp;</div>
+					</li>					
 					<!--<li><img class="pointer img-circle" data-name="marcel" src="img/marcel.jpg" /></li>-->
 				</ul>
 			</div>
@@ -58,16 +62,17 @@
 			<!-- code for list of peeps in chat -->
 			<h2>chatters</h2>
 			<ul id="chatters">
-				<!-- members will dynamically be added here as <li> -->			
+				<!-- members will dynamically be added here as <li> -->
+				<li id='biggie'>biggie</li>
+				<li id='tupac'>tupac</li>
+				<li id='zayn'>zayn</li>
 			</ul>
 		</article>
 		<article id="chatRoom" class="col-lg-6">
-			<div class='row'>
-				<h2>chat log</h2>
-				<ul id="chatLog">
-					<!-- messages will dynamically be added here as <li> -->
-				</ul>
-			</div>
+			<!--<h2>chat log</h2>-->
+			<ul id="chatLog">
+				<!-- messages will dynamically be added here as <li> -->
+			</ul>
 		</article>
 	</section>
 </div>
