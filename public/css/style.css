@@ -177,29 +177,34 @@ body > header {
 #chatLog div {
 	min-height: 80px;
 	height: auto;
+	padding: 5px;
 	box-shadow: 0 3px 5px #ACACAC;
 	vertical-align: top;
 }
 
-#chatLog p {
+#chatLog div i {
+	min-width: 150px;
+}
+
+#chatLog div p.textContent {
 	min-width: 150px;
 	width: auto;
 	max-width: 500px;
-	padding: 5px 10px;
+	/*min-height: 28px;*/
+	padding: 5px 25px;
 	word-wrap: break-word;
 }
 
-#chatLog p:first-child {
-	min-height: 56px;
-}
-
-#chatLog p:last-child {
-	vertical-align: baseline;
+#chatLog div p.textName {
+	vertical-align: top;
 	color: rgb(88,172,250);
 }
 
-#chatRoom i {
-	vertical-align: top;
+#chatLog div p.textTime {
+	display: block;
+	padding-top: 3px;
+	font-size: .8em;
+	font-style: italic;
 }
 
 .admin {

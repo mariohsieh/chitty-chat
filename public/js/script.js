@@ -2,10 +2,11 @@
 
 $(document).ready(function() {
 	// declare variables & initial settings
-	var user = {};	// object to hold new user information	
+	var user = {};			// object to hold new user information	
+	var socket = io();		// load socket.io on client side, connect to server
+					
 	
-	// load socket.io on client side, connect to server
-	var socket = io();					
+	//***** socket event *****//
 	socket.on('initial', function(data) {
 			// console.log(data);
 			// make all taken users inactive for login screen
@@ -51,19 +52,20 @@ $(document).ready(function() {
 	
 	// show message in chat log
 	socket.on('chatMessage', function(data) {
-		//console.log(data.name);
-		//console.log(data.avatar);
-		//console.log(user.name);
-		if (data.name == user.name)
-			$("#chatLog").append("<li class='send pull-right'><div><p class='text-right'>"+data.msg+"</p><p class='text-right'>"+data.name+"</p></div><img class='img-circle' src='img/"+data.name+".jpg' /></li>");
-		else
-			$("#chatLog").append("<li class='receive pull-left'><img class='img-circle' src='img/"+data.name+".jpg' /><div><p>"+data.msg+"</p><p>"+data.name+"</p></div></li>");
-		//$("#chatLog").lastChild().fadeIn(1000);
+		if (user.name) {	// if logged in
+			var message = "";
+			var image = "<img class='img-circle' src='img/"+data.name+".jpg' />";
+			if (data.name == user.name)	// your own messages
+				$("#chatLog").append("<li class='send pull-right'><div><p class='textName text-right'>"+data.name+" said</p><i class='fa fa-quote-left'></i><p class='textContent text-left'>"+data.msg+"</p><i class='fa fa-quote-right text-right'></i><p class='textTime text-right'>a minute ago</p></div>"+image+"</li>");
+			else // everyone else's messages
+				$("#chatLog").append("<li class='receive pull-left'>"+image+"<div><i class='fa fa-quote-left'></i><p>"+data.msg+"</p><i class='fa fa-quote-right'></i><p>"+data.name+"</p></div></li>");
+			//$("#chatLog").lastChild().fadeIn(1000);
+		}
 	});
 	
 	// user leaves
 	socket.on('userLeft', function(data) {
-		if (user.name) {
+		if (user.name) {	// if logged in
 			$("#chatLog").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
 			$("#"+data).removeClass("online");
 		} else {
