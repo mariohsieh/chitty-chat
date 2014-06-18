@@ -26,9 +26,10 @@ $(document).ready(function() {
 			console.log(users[i].name);
 		}
 */ 		//$("#chatters").append("<li id='"+user.name+"'>"+user.name+"</li>");
-
+		console.log(users);
 		for (var i=0;i<length;i++) {
 			$("#"+data[i]).addClass("online");
+			$("#"+data[i]+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
 		}
 			
 	});
@@ -44,6 +45,7 @@ $(document).ready(function() {
 			// show in chat log that someone joined
 			$("#chatLog").append("<li class='admin text-center'>*** "+data+" just joined ***</li>");
 			$("#"+data).addClass("online");
+			$("#"+data+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
 		} else {
 			// on login screen, make user available
 			$("img[data-name='"+data+"']").addClass("inactive");
@@ -52,13 +54,16 @@ $(document).ready(function() {
 	
 	// show message in chat log
 	socket.on('chatMessage', function(data) {
+		console.log(data.msg);
 		if (user.name) {	// if logged in
-			var message = "";
+			var currentTime = "a miniute ago";
+			var message = "<div><i class='fa fa-quote-left'></i><pre class='textContent text-left'>"+data.msg+"</pre>";
+			message += "<i class='fa fa-quote-right text-right'></i><p class='textTime text-right'>"+currentTime+"</p></div>";
 			var image = "<img class='img-circle' src='img/"+data.name+".jpg' />";
 			if (data.name == user.name)	// your own messages
-				$("#chatLog").append("<li class='send pull-right'><div><p class='textName text-right'>"+data.name+" said</p><i class='fa fa-quote-left'></i><p class='textContent text-left'>"+data.msg+"</p><i class='fa fa-quote-right text-right'></i><p class='textTime text-right'>a minute ago</p></div>"+image+"</li>");
+				$("#chatLog").append("<li class='send pull-right'>"+message+image+"</li>");
 			else // everyone else's messages
-				$("#chatLog").append("<li class='receive pull-left'>"+image+"<div><i class='fa fa-quote-left'></i><p>"+data.msg+"</p><i class='fa fa-quote-right'></i><p>"+data.name+"</p></div></li>");
+				$("#chatLog").append("<li class='receive pull-left'>"+image+message+"</li>");
 			//$("#chatLog").lastChild().fadeIn(1000);
 		}
 	});
@@ -68,6 +73,7 @@ $(document).ready(function() {
 		if (user.name) {	// if logged in
 			$("#chatLog").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
 			$("#"+data).removeClass("online");
+			$("#"+data+" i").removeClass("fa-circle").addClass("fa-circle-o").css("color", "inherit");
 		} else {
 			$("img[data-name='"+data+"']").removeClass("inactive");
 		}
@@ -91,7 +97,7 @@ $(document).ready(function() {
 			$("#chatLogin li div").removeClass("active");
 			$(this).next().addClass("active");
 			user.name = $(this).attr("data-name");
-			console.log(user.name);
+			//console.log(user.name);
 			$('#username').val(user.name);
 		}
 	});
@@ -116,7 +122,6 @@ $(document).ready(function() {
 	// send message
 	$(document).on("click", "footer i", function() {
 		user.msg = $('footer textarea').val().trim();
-		//console.log(user.msg);
 		if (user.msg != '') {
 			// emit message to server
 			socket.emit('chatMessage', user);

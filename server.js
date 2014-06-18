@@ -16,7 +16,7 @@ app.configure(function() {
 	
 	// optional //
 	//app.engine('html', require(***).renderFile);	// sets html templating engine
-	//io.set('log level', 1);						// hide log messages from socke.io
+	//io.set('log level', 1);						// hide log messages from socket.io
 });
 
 // routing //

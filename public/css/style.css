@@ -3,9 +3,9 @@
 /***** for all screens ******/
 
 /* tag definitions */
-html {
+html, body {
 
-	font-family: "Andale Mono", Monaco, monospace;
+	font-family: "Andale Mono", Monaco, monospace !important;
 	/*font-family: "Avant Garde", Verdana, sans-serif;*/
 }
 
@@ -47,6 +47,7 @@ body > header {
 
 .container-fluid > section {
 	margin-top: 50px;
+	margin-bottom: 65px; 
 }
 
 /***** login screen *****/
@@ -157,6 +158,8 @@ body > header {
 
 #chatters li {
 	opacity: .75;
+	padding: 0 10px;
+	font-size: 1.3em;
 }
 
 .online {
@@ -174,6 +177,10 @@ body > header {
 	/*display: none;*/
 }
 
+#chatLog {
+	margin-top: 20px;
+}
+
 #chatLog div {
 	min-height: 80px;
 	height: auto;
@@ -184,9 +191,11 @@ body > header {
 
 #chatLog div i {
 	min-width: 150px;
+	width: 100%;
 }
 
-#chatLog div p.textContent {
+#chatLog div pre.textContent {
+	background-color: #FFF;
 	min-width: 150px;
 	width: auto;
 	max-width: 500px;
