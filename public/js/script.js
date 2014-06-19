@@ -3,6 +3,8 @@
 $(document).ready(function() {
 	// declare variables & initial settings
 	var user = {};			// object to hold new user information	
+	var online;				// number of users online;
+	var total;				// number of total users;
 	var socket = io();		// load socket.io on client side, connect to server
 					
 	
@@ -19,29 +21,31 @@ $(document).ready(function() {
 	// display all users chatting upon login
 	socket.on('welcomeUser', function(data) {
 		var users = data;
-		var length = data.length;
+		online = 0;
+		total = $("#chatters > li").length;
 		//console.log(users);
 
 		for (var key in users) {
+			online++;
 			$("#"+key).addClass("online");
 			$("#"+key+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
 			if (user.name != $("#"+key).attr('id'))
 				$("#"+key).addClass("pointer");
 		}
+		$("#chatters").prepend("<li id='onlineCount'>(online "+online+"/"+total+")</li>");
 	});
 	
 	// new user joined the chat
 	socket.on('addUser', function(data) {
-		//console.log(data.name);
-		//console.log(data.avatar);
-
 		// add name to members list
 		//$("#chatters").append("<li id='"+data.name+"'>"+data.name+"</li>");
 		if (user.name) {
+			online++;
 			// show in chat log that someone joined
 			$("#allChat > ul").append("<li class='admin text-center'>*** "+data+" just joined ***</li>");
 			$("#"+data).addClass("online").addClass("pointer");
 			$("#"+data+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
+			$("#onlineCount").text("online "+online+"/"+total);
 		} else {
 			// on login screen, make user available
 			$("img[data-name='"+data+"']").addClass("inactive");
@@ -97,9 +101,11 @@ $(document).ready(function() {
 	// user leaves
 	socket.on('userLeft', function(data) {
 		if (user.name) {	// if logged in
+			online--;
 			$("#allChat > ul").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
 			$("#"+data).removeClass("online").removeClass("pointer");
 			$("#"+data+" i").removeClass("fa-circle").addClass("fa-circle-o").css("color", "inherit");
+			$("#onlineCount").text("online "+online+"/"+total);
 		} else {
 			$("img[data-name='"+data+"']").removeClass("inactive");
 		}
@@ -147,7 +153,7 @@ $(document).ready(function() {
 	$(document).on("dblclick", "#chatters li", function() {
 		var chosen = $(this).attr('id');
 		if ($(this).hasClass("online") && chosen != user.name && $("#"+chosen+"Chat").length == 0) {
-			$("#chatMenu").append("<li class='tab-menu'><a href='#"+chosen+"Chat'>"+chosen+"</a></li>");
+			$("#chatMenu").append("<li class='tab-menu'><a href='' onclick='return false;'>"+chosen+"</a></li>");
 			$(".tab-content").append("<div id='"+chosen+"Chat' class='tab-pane'><ul class='chatLog'></ul></div>");
 		}
 	});

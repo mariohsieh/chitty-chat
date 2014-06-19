@@ -1,8 +1,7 @@
 // all socket.io code
 
 module.exports = function(app,io) {
-	
-	var onlineUsers = [];		// array of all connected
+
 	var clients = {};			// object of all users connected
 	var totalUsers = 0;
 	
@@ -41,7 +40,6 @@ module.exports = function(app,io) {
 				//socket.broadcast.emit('chatMessage', msg);
 			}
 		});
-
 
 		// on disconnect
 		socket.on('disconnect', function() {
