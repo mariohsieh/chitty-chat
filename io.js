@@ -30,9 +30,15 @@ module.exports = function(app,io) {
 		
 		// on sent message
 		socket.on('chatMessage', function(data) {
-			console.log(data);
+			//console.log(data);
 			if (data.target) {
-				
+				var clientID = clients[data.target];
+				//console.log(clients[data.target]);
+				//console.log(clients[data.name]);
+				//io.sockets.socket(test).emit('privateMessage', data);
+				//test.emit('privateMessage', data);				
+				socket.emit('selfieMessage', data);
+				socket.broadcast.to(clientID).emit('privateMessage', data);
 			} else {
 				// broadcast message to all clients
 				io.emit('chatMessage', data);

@@ -18,9 +18,9 @@ $(document).ready(function() {
 
 	// display all users chatting upon login
 	socket.on('welcomeUser', function(data) {
-		console.log(users);
 		var users = data;
 		var length = data.length;
+		//console.log(users);
 
 		for (var key in users) {
 			$("#"+key).addClass("online");
@@ -39,7 +39,7 @@ $(document).ready(function() {
 		//$("#chatters").append("<li id='"+data.name+"'>"+data.name+"</li>");
 		if (user.name) {
 			// show in chat log that someone joined
-			$(".chatLog").append("<li class='admin text-center'>*** "+data+" just joined ***</li>");
+			$("#allChat > ul").append("<li class='admin text-center'>*** "+data+" just joined ***</li>");
 			$("#"+data).addClass("online").addClass("pointer");
 			$("#"+data+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
 		} else {
@@ -47,23 +47,54 @@ $(document).ready(function() {
 			$("img[data-name='"+data+"']").addClass("inactive");
 		}
 	});	
+
+	function displayMessage(info) {
+		//var currentTime = "just now";
+		var chatRoom;
+		if (info.target) {
+			if (info.target == user.name)
+				//alert('hi');
+				chatRoom = info.name + "Chat";
+			else
+				//alert('hello');
+				chatRoom = info.target + "Chat";
+		} else
+			chatRoom = "allChat";
+		//console.log(chatRoom);
+		//console.log(info);		
+			
+		var message = "<div><i class='fa fa-quote-left'></i><pre class='textContent text-left'>"+info.msg+"</pre>";
+		message += "<i class='fa fa-quote-right text-right'></i><p class='textTime text-right'></p></div>";
+		var image = "<img class='img-circle' src='img/"+info.name+".jpg' />";
+		if (info.name == user.name)	// your own messages
+			$("#"+chatRoom+" ul").append("<li class='send pull-right'>"+message+"<span class='cornerSend'></span>"+image+"</li>");
+		else // everyone else's messages
+			$("#"+chatRoom+" ul").append("<li class='receive pull-left'>"+image+"<span class='cornerReceive'></span>"+message+"</li>");
+		//$(".chatLog").lastChild().fadeIn(1000);		
+	}
 	
 	// show message in chat log
 	socket.on('chatMessage', function(data) {
 		//console.log(data.msg);
 		if (user.name) {	// if logged in
-			var currentTime = "just now";
-			var message = "<div><i class='fa fa-quote-left'></i><pre class='textContent text-left'>"+data.msg+"</pre>";
-			message += "<i class='fa fa-quote-right text-right'></i><p class='textTime text-right'></p></div>";
-			var image = "<img class='img-circle' src='img/"+data.name+".jpg' />";
-			if (data.name == user.name)	// your own messages
-				$(".chatLog").append("<li class='send pull-right'>"+message+"<span class='cornerSend'></span>"+image+"</li>");
-			else // everyone else's messages
-				$(".chatLog").append("<li class='receive pull-left'>"+image+"<span class='cornerReceive'></span>"+message+"</li>");
-			//$(".chatLog").lastChild().fadeIn(1000);
+			displayMessage(data);
 		}
 	});
-	
+
+	// show private messages
+	socket.on('privateMessage', function(data) {
+		//alert('hi');
+		if (user.name) {
+			//$("#"+data.name+"Chat > ul").append("<li>"+data.msg+"</li>");
+			displayMessage(data);
+		}
+	});
+	socket.on('selfieMessage', function(data) {
+		//console.log(data);
+		displayMessage(data);
+	});
+
+
 	// user leaves
 	socket.on('userLeft', function(data) {
 		if (user.name) {	// if logged in
@@ -118,7 +149,7 @@ $(document).ready(function() {
 		var chosen = $(this).attr('id');
 		if ($(this).hasClass("online") && chosen != user.name) {
 			$("#chatMenu").append("<li class='tab-menu'><a href='#"+chosen+"Chat'>"+chosen+"</a></li>");
-			$(".tab-content").append("<div id='"+chosen+"Chat' class='tab-pane'></div>");
+			$(".tab-content").append("<div id='"+chosen+"Chat' class='tab-pane'><ul class='chatLog'></ul></div>");
 		}
 	});
 	
@@ -130,7 +161,10 @@ $(document).ready(function() {
 		$(".tab-content > div").removeClass("active");
 		$("#"+chosen+"Chat").addClass("active");
 		if (chosen != "all")
-			user.target = "chosen";
+			user.target = chosen;
+		else
+			delete user.target;
+		//console.log(user);
 	});
 	
 /*
