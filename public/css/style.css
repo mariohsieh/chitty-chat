@@ -89,24 +89,24 @@ body > header {
 }
 */
 
-#chatLogin > div:first-child, #chatLogin > div:last-child {
+#chatLogin > div:first-of-type, #chatLogin > div:last-of-type {
 	height: 120px;
 	background-color: rgba(88,172,250,1);
 	color: #000;
 }
 
-#chatLogin > div:first-child {
+#chatLogin > div:first-of-type {
 	padding: 22px 10px;
 }
 
-#chatLogin > div:nth-child(2) {
+#chatLogin > div:nth-of-type(2) {
 	height: 160px;
 	padding: 10px 0;
 	background-color: #FAFAFA;
 	/*box-shadow: inset 0 -3px 5px #ACACAC, inset 0 3px 5px #ACACAC;*/
 }
 
-#chatLogin > div:last-child {
+#chatLogin > div:last-of-type {
 	/*box-shadow: 0 -3px 5px #ACACAC;*/
 }
 
@@ -129,8 +129,23 @@ body > header {
 	display: inline-block;
 }
 
-#chatLogin img:hover {
-	/*border: 3px solid rgba(88,172,250,1);*/
+#chatLogin li:hover::before {
+	position: absolute;
+	border: solid;
+	border-color: rgba(0,0,0,.5) transparent;
+	border-width: 0 6px 6px 6px;
+	margin: 92px 0 0 -6px;
+	content: "";
+}
+
+#chatLogin li:hover::after {
+	position: absolute;
+	content: attr(data-popup);
+	margin-left: -75px;
+	width: 150px;	
+	padding: 5px 0;
+	background-color: rgba(0,0,0,.5);
+	color: #FFF;	
 }
 
 #chatLogin li div {
@@ -156,9 +171,13 @@ body > header {
 	display: none;
 }
 
+#chatters {
+	margin: 10px 0;
+}
+
 #chatters li {
 	opacity: .75;
-	padding: 0 10px;
+	padding: 5px 10px;
 	font-size: 1.3em;
 }
 
