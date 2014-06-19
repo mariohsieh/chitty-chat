@@ -51,12 +51,10 @@ $(document).ready(function() {
 	function displayMessage(info) {
 		//var currentTime = "just now";
 		var chatRoom;
-		if (info.target) {
-			if (info.target == user.name)
-				//alert('hi');
+		if (info.target) { // if private message
+			if (info.target == user.name)	// to
 				chatRoom = info.name + "Chat";
-			else
-				//alert('hello');
+			else // from
 				chatRoom = info.target + "Chat";
 		} else
 			chatRoom = "allChat";
@@ -84,10 +82,11 @@ $(document).ready(function() {
 	// show private messages
 	socket.on('privateMessage', function(data) {
 		//alert('hi');
-		if (user.name) {
-			//$("#"+data.name+"Chat > ul").append("<li>"+data.msg+"</li>");
-			displayMessage(data);
+		if ($("#"+data.name+"Chat").length == 0) {
+			$("#chatMenu").append("<li class='tab-menu'><a href='#"+data.name+"Chat'>"+data.name+"</a></li>");
+			$(".tab-content").append("<div id='"+data.name+"Chat' class='tab-pane'><ul class='chatLog'></ul></div>");
 		}
+		displayMessage(data);
 	});
 	socket.on('selfieMessage', function(data) {
 		//console.log(data);
@@ -98,7 +97,7 @@ $(document).ready(function() {
 	// user leaves
 	socket.on('userLeft', function(data) {
 		if (user.name) {	// if logged in
-			$(".chatLog").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
+			$("#allChat > ul").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
 			$("#"+data).removeClass("online").removeClass("pointer");
 			$("#"+data+" i").removeClass("fa-circle").addClass("fa-circle-o").css("color", "inherit");
 		} else {
@@ -147,7 +146,7 @@ $(document).ready(function() {
 	// start private chat
 	$(document).on("dblclick", "#chatters li", function() {
 		var chosen = $(this).attr('id');
-		if ($(this).hasClass("online") && chosen != user.name) {
+		if ($(this).hasClass("online") && chosen != user.name && $("#"+chosen+"Chat").length == 0) {
 			$("#chatMenu").append("<li class='tab-menu'><a href='#"+chosen+"Chat'>"+chosen+"</a></li>");
 			$(".tab-content").append("<div id='"+chosen+"Chat' class='tab-pane'><ul class='chatLog'></ul></div>");
 		}

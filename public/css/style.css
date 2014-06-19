@@ -229,15 +229,11 @@ body > header {
 }
 
 .chatLog div p.textName {
-	vertical-align: top;
-	color: rgb(88,172,250);
-}
-
-.chatLog div p.textTime {
 	display: block;
 	padding-top: 3px;
 	font-size: .8em;
 	font-style: italic;
+	/*color: rgb(88,172,250);*/
 }
 
 .chatLog li .cornerSend {
