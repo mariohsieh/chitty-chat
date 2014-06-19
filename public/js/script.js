@@ -8,32 +8,26 @@ $(document).ready(function() {
 	
 	//***** socket event *****//
 	socket.on('initial', function(data) {
-			// console.log(data);
-			// make all taken users inactive for login screen
-			var length = data.length;
-			for (var i=0;i<length;i++) {
-				$("img[data-name='"+data[i]+"']").addClass("inactive");
+			var users = data;
+			
+			// disable avatar if already taken
+			for (var key in users) {
+				$("img[data-name='"+key+"']").addClass("inactive");
 			}
 	});
 
 	// display all users chatting upon login
 	socket.on('welcomeUser', function(data) {
+		console.log(users);
 		var users = data;
 		var length = data.length;
-/*
-		for (var i=0;i<length;i++) {
-			$("#chatters").append("<li id='"+users[i].name+"'>"+users[i].name+"</li>");
-			console.log(users[i].name);
+
+		for (var key in users) {
+			$("#"+key).addClass("online");
+			$("#"+key+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
+			if (user.name != $("#"+key).attr('id'))
+				$("#"+key).addClass("pointer");
 		}
-*/ 		//$("#chatters").append("<li id='"+user.name+"'>"+user.name+"</li>");
-		console.log(users);
-		for (var i=0;i<length;i++) {
-			$("#"+data[i]).addClass("online");
-			$("#"+data[i]+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
-			if (user.name != $("#"+data[i]).attr('id'))
-				$("#"+data[i]).addClass("pointer");
-		}
-			
 	});
 	
 	// new user joined the chat
@@ -60,7 +54,7 @@ $(document).ready(function() {
 		if (user.name) {	// if logged in
 			var currentTime = "just now";
 			var message = "<div><i class='fa fa-quote-left'></i><pre class='textContent text-left'>"+data.msg+"</pre>";
-			message += "<i class='fa fa-quote-right text-right'></i><p class='textTime text-right'>"+currentTime+"</p></div>";
+			message += "<i class='fa fa-quote-right text-right'></i><p class='textTime text-right'></p></div>";
 			var image = "<img class='img-circle' src='img/"+data.name+".jpg' />";
 			if (data.name == user.name)	// your own messages
 				$(".chatLog").append("<li class='send pull-right'>"+message+"<span class='cornerSend'></span>"+image+"</li>");
@@ -121,8 +115,22 @@ $(document).ready(function() {
 
 	// start private chat
 	$(document).on("dblclick", "#chatters li", function() {
-		if ($(this).hasClass("online") && $(this).attr('id') != user.name)
-			alert('hi');
+		var chosen = $(this).attr('id');
+		if ($(this).hasClass("online") && chosen != user.name) {
+			$("#chatMenu").append("<li class='tab-menu'><a href='#"+chosen+"Chat'>"+chosen+"</a></li>");
+			$(".tab-content").append("<div id='"+chosen+"Chat' class='tab-pane'></div>");
+		}
+	});
+	
+	// switch to chat
+	$(document).on("click", "#chatMenu li", function() {
+		var chosen = $(this).text();
+		$("#chatMenu li").removeClass("active");
+		$(this).addClass("active");
+		$(".tab-content > div").removeClass("active");
+		$("#"+chosen+"Chat").addClass("active");
+		if (chosen != "all")
+			user.target = "chosen";
 	});
 	
 /*
