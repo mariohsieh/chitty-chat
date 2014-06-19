@@ -24,7 +24,7 @@ img {
 	cursor: pointer;
 }
 
-.active {
+.selected {
 	background-color: #000;
 }
 
@@ -145,7 +145,7 @@ body > header {
 	width: 150px;	
 	padding: 5px 0;
 	background-color: rgba(0,0,0,.5);
-	color: #FFF;	
+	color: #FFF;
 }
 
 #chatLogin li div {
@@ -171,6 +171,10 @@ body > header {
 	display: none;
 }
 
+#chatRoom > h2 {
+	margin-bottom: 10px;
+}
+
 #chatters {
 	margin: 10px 0;
 }
@@ -186,7 +190,7 @@ body > header {
 	font-weight: bold;
 }
 
-#chatLog img, #chatLog div {
+.chatLog img, .chatLog div {
 	display: inline-block;
 }
 
@@ -196,11 +200,12 @@ body > header {
 	/*display: none;*/
 }
 
-#chatLog {
+.chatLog {
 	margin-top: 20px;
 }
 
-#chatLog div {
+.chatLog div {
+	background-color: #FAFAFA;
 	min-height: 80px;
 	height: auto;
 	padding: 5px;
@@ -208,13 +213,13 @@ body > header {
 	vertical-align: top;
 }
 
-#chatLog div i {
+.chatLog div i {
 	min-width: 150px;
 	width: 100%;
 }
 
-#chatLog div pre.textContent {
-	background-color: #FFF;
+.chatLog div pre.textContent {
+	background-color: inherit;
 	min-width: 150px;
 	width: auto;
 	max-width: 500px;
@@ -223,19 +228,42 @@ body > header {
 	word-wrap: break-word;
 }
 
-#chatLog div p.textName {
+.chatLog div p.textName {
 	vertical-align: top;
 	color: rgb(88,172,250);
 }
 
-#chatLog div p.textTime {
+.chatLog div p.textTime {
 	display: block;
 	padding-top: 3px;
 	font-size: .8em;
 	font-style: italic;
 }
 
+.chatLog li .cornerSend {
+	position: relative;
+	top: 16px;
+	width: 0;
+	height: 0;
+	border-top: 15px solid #FAFAFA;
+	border-right: 25px solid transparent;
+	vertical-align: top;
+	/*margin-top: 10px;*/
+	/*box-shadow: 0 3px 3px 3px #ACACAC;*/	
+}
+
+.chatLog li .cornerReceive {
+	position: relative;
+	top: 16px;
+	width: 0;
+	height: 0;
+	border-top: 15px solid #FAFAFA;
+	border-left: 25px solid transparent;
+	vertical-align: top;
+}
+
 .admin {
+	background-color: #FFF;
 	clear: both;
 	margin: 10px 0;
 	color: red;

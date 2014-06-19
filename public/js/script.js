@@ -30,6 +30,8 @@ $(document).ready(function() {
 		for (var i=0;i<length;i++) {
 			$("#"+data[i]).addClass("online");
 			$("#"+data[i]+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
+			if (user.name != $("#"+data[i]).attr('id'))
+				$("#"+data[i]).addClass("pointer");
 		}
 			
 	});
@@ -43,8 +45,8 @@ $(document).ready(function() {
 		//$("#chatters").append("<li id='"+data.name+"'>"+data.name+"</li>");
 		if (user.name) {
 			// show in chat log that someone joined
-			$("#chatLog").append("<li class='admin text-center'>*** "+data+" just joined ***</li>");
-			$("#"+data).addClass("online");
+			$(".chatLog").append("<li class='admin text-center'>*** "+data+" just joined ***</li>");
+			$("#"+data).addClass("online").addClass("pointer");
 			$("#"+data+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
 		} else {
 			// on login screen, make user available
@@ -54,25 +56,25 @@ $(document).ready(function() {
 	
 	// show message in chat log
 	socket.on('chatMessage', function(data) {
-		console.log(data.msg);
+		//console.log(data.msg);
 		if (user.name) {	// if logged in
-			var currentTime = "a miniute ago";
+			var currentTime = "just now";
 			var message = "<div><i class='fa fa-quote-left'></i><pre class='textContent text-left'>"+data.msg+"</pre>";
 			message += "<i class='fa fa-quote-right text-right'></i><p class='textTime text-right'>"+currentTime+"</p></div>";
 			var image = "<img class='img-circle' src='img/"+data.name+".jpg' />";
 			if (data.name == user.name)	// your own messages
-				$("#chatLog").append("<li class='send pull-right'>"+message+image+"</li>");
+				$(".chatLog").append("<li class='send pull-right'>"+message+"<span class='cornerSend'></span>"+image+"</li>");
 			else // everyone else's messages
-				$("#chatLog").append("<li class='receive pull-left'>"+image+message+"</li>");
-			//$("#chatLog").lastChild().fadeIn(1000);
+				$(".chatLog").append("<li class='receive pull-left'>"+image+"<span class='cornerReceive'></span>"+message+"</li>");
+			//$(".chatLog").lastChild().fadeIn(1000);
 		}
 	});
 	
 	// user leaves
 	socket.on('userLeft', function(data) {
 		if (user.name) {	// if logged in
-			$("#chatLog").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
-			$("#"+data).removeClass("online");
+			$(".chatLog").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
+			$("#"+data).removeClass("online").removeClass("pointer");
 			$("#"+data+" i").removeClass("fa-circle").addClass("fa-circle-o").css("color", "inherit");
 		} else {
 			$("img[data-name='"+data+"']").removeClass("inactive");
@@ -80,28 +82,16 @@ $(document).ready(function() {
 	});
  
 	//***** event listeners *****//
-/*
-	// avatar mouseover
-	$(document).on("mouseover", "#chatLogin img", function() {
-		$(this).next().css("background-color", "#000");
-	});
-
-	$(document).on("mouseout", "#chatLogin img", function() {
-		$(this).next().css("background-color", "#FAFAFA");
-	});
-*/
-
-	//set avatar
+	// choose user
 	$(document).on("click", "#chatLogin img", function() {
 		if (!$(this).hasClass('inactive')) {
-			$("#chatLogin li div").removeClass("active");
-			$(this).next().addClass("active");
+			$("#chatLogin li div").removeClass("selected");
+			$(this).next().addClass("selected");
 			user.name = $(this).attr("data-name");
 			//console.log(user.name);
 			$('#username').val(user.name);
 		}
 	});
-	
 	
 	// login user
 	$(document).on("click", "#chatLogin button", function() {
@@ -109,7 +99,7 @@ $(document).ready(function() {
 		if (!user.name)
 			alert("please select a user");
 		else {
-			$("#chatRoom").prepend("<h2>chat log - " + user.name + "</h2>");
+			$("#chatRoom").prepend("<h2>welcome - " + user.name + "</h2>");
 			socket.emit("login", user);					// send user info to server
 			$("#loginPage").css("display", "none");		// hide login screen
 			$("#chatPage").css("display", "block");		// show chat screen
@@ -117,7 +107,6 @@ $(document).ready(function() {
 			$("#username").val('');						// clear username;
 		}
 	});
-
 
 	// send message
 	$(document).on("click", "footer i", function() {
@@ -128,6 +117,12 @@ $(document).ready(function() {
 			// clear input box after send
 			$('footer textarea').val('');
 		}
+	});
+
+	// start private chat
+	$(document).on("dblclick", "#chatters li", function() {
+		if ($(this).hasClass("online") && $(this).attr('id') != user.name)
+			alert('hi');
 	});
 	
 /*
