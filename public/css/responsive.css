@@ -1,0 +1,29 @@
+/* large */
+/*@media all and (min-width: 1200px) {
+
+}*/
+
+/* medium */
+@media screen and (max-width: 1199px) {
+	#chatLogin {
+		/*width: 480px;*/
+	}
+}
+
+/* small */
+@media screen and (max-width: 991px) {
+
+}
+
+/* small */
+@media screen and (max-width: 767px) {
+	#chatLogin {
+		width: 75%;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	#chatLogin {
+		width: 100%;
+	}
+}

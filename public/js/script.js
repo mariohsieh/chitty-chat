@@ -45,7 +45,7 @@ $(document).ready(function() {
 			$("#allChat > ul").append("<li class='admin text-center'>*** "+data+" just joined ***</li>");
 			$("#"+data).addClass("online").addClass("pointer");
 			$("#"+data+" i").removeClass("fa-circle-o").addClass("fa-circle").css("color", "green");
-			$("#onlineCount").text("online "+online+"/"+total);
+			$("#onlineCount").text("(online "+online+"/"+total+")");
 		} else {
 			// on login screen, make user available
 			$("img[data-name='"+data+"']").addClass("inactive");
@@ -105,7 +105,7 @@ $(document).ready(function() {
 			$("#allChat > ul").append("<li class='admin text-center'>*** "+data+" just left ***</li>");
 			$("#"+data).removeClass("online").removeClass("pointer");
 			$("#"+data+" i").removeClass("fa-circle").addClass("fa-circle-o").css("color", "inherit");
-			$("#onlineCount").text("online "+online+"/"+total);
+			$("#onlineCount").text("(online "+online+"/"+total+")");
 		} else {
 			$("img[data-name='"+data+"']").removeClass("inactive");
 		}

@@ -18,6 +18,7 @@
 	<!-- link css-->
 	<link rel="stylesheet" href="css/reset.css" />
 	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/responsive.css" />
 	
 </head>
 <body>
@@ -27,7 +28,8 @@
 </header>
 <div class="container-fluid">
 	<section id="loginPage" class="row">
-		<article id="chatLogin" class="col-xs-6 col-xs-offset-3 col-lg-4 col-lg-offset-4 text-center">
+		<!--<article id="chatLogin" class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 text-center">-->
+		<article id="chatLogin" class="text-center">
 			<div>
 				<!--<h3>Username</h3>-->
 				<input id="username" class="text-center" type="text" placeholder="select a user" disabled />
@@ -39,12 +41,12 @@
 					<li data-popup="tupac shakur">
 						<img data-name="tupac" class="pointer img-circle" src="img/tupac.jpg" />
 						<div>&nbsp;</div>
-					</li>
-					<li data-popup="zayn malik">
+					</li><!--
+					--><li data-popup="zayn malik">
 						<img data-name="zayn" class="pointer img-circle" src="img/zayn.jpg" />
 						<div>&nbsp;</div>
-					</li>
-					<li data-popup="biggie smalls">
+					</li><!--
+					--><li data-popup="biggie smalls">
 						<img data-name="biggie" class="pointer img-circle" src="img/biggie.jpg" />
 						<div>&nbsp;</div>
 					</li>					
@@ -58,7 +60,7 @@
 		</article>
 	</section>
 	<section id="chatPage" class="row">
-		<article id="chatList" class="col-lg-2 col-lg-offset-1">
+		<article id="chatList" class="col-sm-3 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
 			<!-- code for list of peeps in chat -->
 			<h2>chatters</h2>
 			<ul id="chatters">
@@ -68,7 +70,7 @@
 				<li id='zayn'>zayn<i class="fa fa-circle-o pull-right"></i></li>
 			</ul>
 		</article>
-		<article id="chatRoom" class="col-lg-7">
+		<article id="chatRoom" class="col-sm-9 col-md-8 col-lg-7">
 			<ul id="chatMenu" class="nav nav-tabs">
 				<li class="tab-menu active"><a href="" onclick="return false">all</a></li>
 			</ul>	

@@ -66,12 +66,11 @@ body > header {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	margin-top: auto;
-	margin-bottom: auto;
+	margin: auto;
 	height: 400px;
+	width: 480px;
 	padding: 0;
 	box-shadow: 0 0 35px 5px rgba(0,0,0,.25);
-
 	font-size: 1.2em;
 	/*font-variant: small-caps;*/
 }
@@ -127,6 +126,7 @@ body > header {
 
 #chatLogin li {
 	display: inline-block;
+	width: 100px;
 }
 
 #chatLogin li:hover::before {
@@ -314,24 +314,4 @@ footer textarea {
 footer section i {
 	margin-top: -3px;
 	padding-left: 12px;
-}
-
-/* large monitors */
-@media all and (min-width: 1200px) {
-
-}
-
-/* computers */
-@media all and (min-width: 992px) and (max-width: 1199px) {
-
-}
-
-/* tablets */
-@media all and (min-width: 768px) and (max-width: 991px) {
-
-}
-
-/* phones */
-@media all and (max-width: 767px) {
-
 }
