@@ -53,14 +53,6 @@ body > header {
 /***** login screen *****/
 
 #chatLogin {
-/*
-	position: relative;
-	top: 50%; 	
-	-o-transform: translateY(-50%);
-	-webkit-transform: translateY(50%);
-	-moz-transform: translateY(-50%);
-	transform: translateY(-50%);
-*/
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -314,4 +306,31 @@ footer textarea {
 footer section i {
 	margin-top: -3px;
 	padding-left: 12px;
+}
+
+
+/***** animations *****/
+.unread {
+/*
+	animation-name: blink;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+*/
+	animation: blink 2s infinite;
+	animation-timing-function: ease-in-out;
+	-webkit-animation: blink 2s infinite;
+	-webkit-animation-timing-function: ease-in-out;
+}
+
+@keyframes blink {
+	0%		{background-color: #FFF;} 
+	50% 	{background-color: #DDD;}
+	100% 	{background-color: #FFF;}
+}
+
+@-webkit-keyframes blink {
+	0% 		{background-color: #FFF;} 
+	50% 	{background-color: #DDD;}
+	100% 	{background-color: #FFF;}
 }

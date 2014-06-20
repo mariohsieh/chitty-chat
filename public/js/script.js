@@ -6,9 +6,42 @@ $(document).ready(function() {
 	var online;				// number of users online;
 	var total;				// number of total users;
 	var socket = io();		// load socket.io on client side, connect to server
+
 					
+	/******************************
+			helper functions
+	******************************/
+	function displayMessage(info) {
+		//var currentTime = "just now";
+		var chatRoom;
+		if (info.target) { // if private message
+			if (info.target == user.name)	// to
+				chatRoom = info.name + "Chat";
+			else // from
+				chatRoom = info.target + "Chat";
+		} else
+			chatRoom = "allChat";
+		//console.log(chatRoom);
+		//console.log(info);		
+			
+		var message = "<div><i class='fa fa-quote-left'></i><pre class='textContent text-left'>"+info.msg+"</pre>";
+		message += "<i class='fa fa-quote-right text-right'></i><p class='textTime text-right'></p></div>";
+		var image = "<img class='img-circle' src='img/"+info.name+".jpg' />";
+		if (info.name == user.name)	// your own messages
+			$("#"+chatRoom+" ul").append("<li class='send pull-right'>"+message+"<span class='cornerSend'></span>"+image+"</li>");
+		else // everyone else's messages
+			$("#"+chatRoom+" ul").append("<li class='receive pull-left'>"+image+"<span class='cornerReceive'></span>"+message+"</li>");
+		//$(".chatLog").lastChild().fadeIn(1000);		
+	}	
 	
-	//***** socket event *****//
+	function scrollDown() {
+		$("html, body").animate({scrollTop: $(document).height()-$(window).height()}, 750);
+	}
+	
+	
+	/******************************
+			socket events
+	******************************/
 	socket.on('initial', function(data) {
 			var users = data;
 			
@@ -51,52 +84,38 @@ $(document).ready(function() {
 			$("img[data-name='"+data+"']").addClass("inactive");
 		}
 	});	
-
-	function displayMessage(info) {
-		//var currentTime = "just now";
-		var chatRoom;
-		if (info.target) { // if private message
-			if (info.target == user.name)	// to
-				chatRoom = info.name + "Chat";
-			else // from
-				chatRoom = info.target + "Chat";
-		} else
-			chatRoom = "allChat";
-		//console.log(chatRoom);
-		//console.log(info);		
-			
-		var message = "<div><i class='fa fa-quote-left'></i><pre class='textContent text-left'>"+info.msg+"</pre>";
-		message += "<i class='fa fa-quote-right text-right'></i><p class='textTime text-right'></p></div>";
-		var image = "<img class='img-circle' src='img/"+info.name+".jpg' />";
-		if (info.name == user.name)	// your own messages
-			$("#"+chatRoom+" ul").append("<li class='send pull-right'>"+message+"<span class='cornerSend'></span>"+image+"</li>");
-		else // everyone else's messages
-			$("#"+chatRoom+" ul").append("<li class='receive pull-left'>"+image+"<span class='cornerReceive'></span>"+message+"</li>");
-		//$(".chatLog").lastChild().fadeIn(1000);		
-	}
 	
-	// show message in chat log
+	// show message in all Chat
 	socket.on('chatMessage', function(data) {
 		//console.log(data.msg);
 		if (user.name) {	// if logged in
 			displayMessage(data);
+			if ($("#allChat").hasClass("active"))
+				scrollDown();
+			else
+				$("#allTab").addClass("unread");
 		}
+
 	});
 
 	// show private messages
 	socket.on('privateMessage', function(data) {
 		//alert('hi');
-		if ($("#"+data.name+"Chat").length == 0) {
-			$("#chatMenu").append("<li class='tab-menu'><a href='#"+data.name+"Chat'>"+data.name+"</a></li>");
+		if ($("#"+data.name+"Chat").length == 0) { // create private chat if it doesn't exist
+			$("#chatMenu").append("<li id='"+data.name+"Tab' class='tab-menu'><a href='#"+data.name+"Chat'>"+data.name+"</a></li>");
 			$(".tab-content").append("<div id='"+data.name+"Chat' class='tab-pane'><ul class='chatLog'></ul></div>");
 		}
 		displayMessage(data);
+		if ($("#"+data.name+"Chat").hasClass("active")) // if client has private chat open, scroll down on new message
+			scrollDown();
+		else
+			$("#"+data.name+"Tab").addClass("unread");
 	});
 	socket.on('selfieMessage', function(data) {
 		//console.log(data);
 		displayMessage(data);
+		scrollDown();
 	});
-
 
 	// user leaves
 	socket.on('userLeft', function(data) {
@@ -111,7 +130,10 @@ $(document).ready(function() {
 		}
 	});
  
-	//***** event listeners *****//
+ 
+	/******************************
+			event listeners
+	******************************/
 	// choose user
 	$(document).on("click", "#chatLogin img", function() {
 		if (!$(this).hasClass('inactive')) {
@@ -153,7 +175,7 @@ $(document).ready(function() {
 	$(document).on("dblclick", "#chatters li", function() {
 		var chosen = $(this).attr('id');
 		if ($(this).hasClass("online") && chosen != user.name && $("#"+chosen+"Chat").length == 0) {
-			$("#chatMenu").append("<li class='tab-menu'><a href='' onclick='return false;'>"+chosen+"</a></li>");
+			$("#chatMenu").append("<li id='"+chosen+"Tab' class='tab-menu'><a href='' onclick='return false;'>"+chosen+"</a></li>");
 			$(".tab-content").append("<div id='"+chosen+"Chat' class='tab-pane'><ul class='chatLog'></ul></div>");
 		}
 	});
@@ -165,6 +187,8 @@ $(document).ready(function() {
 		$(this).addClass("active");
 		$(".tab-content > div").removeClass("active");
 		$("#"+chosen+"Chat").addClass("active");
+		$("#"+chosen+"Tab").removeClass("unread");
+		
 		if (chosen != "all")
 			user.target = chosen;
 		else
@@ -184,7 +208,10 @@ $(document).ready(function() {
 	});	
 */	
 
-	/*** animation events ***/
+
+	/******************************
+			animation events
+	******************************/
 	$("footer").on("transitionend webkitTransitionEnd oTransitionEnd", function() {
 		var hovered = $("footer").css("height");		
 		if (hovered == "150px") {
@@ -196,8 +223,16 @@ $(document).ready(function() {
 		}
 		
 	});
-
+	
 });
 
 
+//////////// need to add //////////////////
+/*
+
+-scroll to top button
+-new message indicator
+ 
+
+*/ 
 
