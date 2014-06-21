@@ -93,7 +93,7 @@ $(document).ready(function() {
 			if ($("#allChat").hasClass("active"))
 				scrollDown();
 			else
-				$("#allTab").addClass("unread");
+				$("#allTab a").addClass("unread");
 		}
 
 	});
@@ -102,14 +102,14 @@ $(document).ready(function() {
 	socket.on('privateMessage', function(data) {
 		//alert('hi');
 		if ($("#"+data.name+"Chat").length == 0) { // create private chat if it doesn't exist
-			$("#chatMenu").append("<li id='"+data.name+"Tab' class='tab-menu'><a href='#"+data.name+"Chat'>"+data.name+"</a></li>");
+			$("#chatMenu").append("<li id='"+data.name+"Tab' class='tab-menu'><a href='' onclick='return false'>"+data.name+"</a></li>");
 			$(".tab-content").append("<div id='"+data.name+"Chat' class='tab-pane'><ul class='chatLog'></ul></div>");
 		}
 		displayMessage(data);
 		if ($("#"+data.name+"Chat").hasClass("active")) // if client has private chat open, scroll down on new message
 			scrollDown();
 		else
-			$("#"+data.name+"Tab").addClass("unread");
+			$("#"+data.name+"Tab a").addClass("unread");
 	});
 	socket.on('selfieMessage', function(data) {
 		//console.log(data);
@@ -187,7 +187,7 @@ $(document).ready(function() {
 		$(this).addClass("active");
 		$(".tab-content > div").removeClass("active");
 		$("#"+chosen+"Chat").addClass("active");
-		$("#"+chosen+"Tab").removeClass("unread");
+		$("#"+chosen+"Tab a").removeClass("unread");
 		
 		if (chosen != "all")
 			user.target = chosen;
@@ -195,7 +195,11 @@ $(document).ready(function() {
 			delete user.target;
 		//console.log(user);
 	});
-	
+
+	// scroll to top
+	$(document).on("click", "#scrollBtn", function() {
+		$("html, body").animate({scrollTop: 0}, 1000);
+	});
 /*
 	// message input rollover
 	$(document).on("mouseover", "footer", function() {
@@ -208,7 +212,17 @@ $(document).ready(function() {
 	});	
 */	
 
+	// display scroll button 
+	$(window).scroll(function() {
+		if ($("body").scrollTop() != 0)
+			$("#scrollBtn").css("display", "block");
+		else
+			$("#scrollBtn").css("display", "none");
 
+		//console.log(window.screen.top);
+		//console.log($("body").scrollTop());
+	});
+	
 	/******************************
 			animation events
 	******************************/
@@ -231,8 +245,6 @@ $(document).ready(function() {
 /*
 
 -scroll to top button
--new message indicator
- 
 
 */ 
 

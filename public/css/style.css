@@ -257,6 +257,20 @@ body > header {
 	color: red;
 }
 
+#scrollBtn {
+	display: none;
+	position: fixed;
+	bottom: 75px;
+	right: 50px;
+}
+
+/*
+#scrollBtn:hover:before {
+	content: "top";
+	font-size: .5em;
+	right: 75px;
+}
+*/ 
 
 /*****  chat input *****/
 
