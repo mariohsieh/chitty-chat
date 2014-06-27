@@ -26,14 +26,14 @@ $(document).ready(function() {
 			
 		var message = "<div><i class='fa fa-quote-left'></i><pre class='textContent text-left'>"+info.msg+"</pre>";
 		message += "<i class='fa fa-quote-right text-right'></i><p class='textTime text-right'></p></div>";
-		var image = "<img class='img-circle' src='img/"+info.name+".jpg' />";
+		var image = "<img class='avatar img-circle' src='img/"+info.name+".jpg' />";
 		if (info.name == user.name)	// your own messages
 			$("#"+chatRoom+" ul").append("<li class='send pull-right'>"+message+"<span class='cornerSend'></span>"+image+"</li>");
 		else // everyone else's messages
 			$("#"+chatRoom+" ul").append("<li class='receive pull-left'>"+image+"<span class='cornerReceive'></span>"+message+"</li>");
 		//$(".chatLog").lastChild().fadeIn(1000);		
 	}	
-	
+
 	function scrollDown() {
 		$("html, body").animate({scrollTop: $(document).height()-$(window).height()}, 750);
 	}
@@ -160,17 +160,6 @@ $(document).ready(function() {
 		}
 	});
 
-	// send message
-	$(document).on("click", "footer i", function() {
-		user.msg = $('footer textarea').val().trim();
-		if (user.msg != '') {
-			// emit message to server
-			socket.emit('chatMessage', user);
-			// clear input box after send
-			$('footer textarea').val('');
-		}
-	});
-
 	// start private chat
 	$(document).on("dblclick", "#chatters li", function() {
 		var chosen = $(this).attr('id');
@@ -196,10 +185,19 @@ $(document).ready(function() {
 		//console.log(user);
 	});
 
+	// view instagram photo
+	$(document).on("click", ".chatLog div pre img", function() {
+		var imgSrc = $(this).attr("src");
+		console.log(imgSrc);
+		$("#overlay").css("display", "block");
+		$("#overlay").append("<img alt='instagram' src='"+imgSrc+"' />");
+	});
+
 	// scroll to top
 	$(document).on("click", "#scrollBtn", function() {
 		$("html, body").animate({scrollTop: 0}, 1000);
 	});
+	
 /*
 	// message input rollover
 	$(document).on("mouseover", "footer", function() {
@@ -212,7 +210,7 @@ $(document).ready(function() {
 	});	
 */	
 
-	// display scroll button 
+	// display scroll up button on window scroll down
 	$(window).scroll(function() {
 		if ($("html, body").scrollTop() != 0)
 			$("#scrollBtn").css("display", "block");
@@ -222,7 +220,52 @@ $(document).ready(function() {
 		//console.log(window.screen.top);
 		//console.log($("body").scrollTop());
 	});
+
+	// send message
+	$(document).on("click", "#btnSubmit", function() {
+		user.msg = $('footer textarea').val().trim();
+		if (user.msg != '') {
+			// emit message to server
+			socket.emit('chatMessage', user);
+			// clear input box after send
+			$('footer textarea').val('');
+		}
+	});
 	
+	// post random instagram
+	$(document).on("click", "#btnInstagram", function() {
+		
+		// store instagram api into variable
+		var api = "https://api.instagram.com/v1/media/popular?client_id=21735ffe9b94435f9cdb11f00935e269";
+
+		// ajax call returns 20 most popular instagram posts
+		$.ajax({
+			type: "GET",
+			dataType: "jsonp",
+			cache: false,
+			url: api,
+			success: function(data) {
+				var info = data.data;
+				console.log(info);
+				
+				//for (var i=0;i<info.length;i++) {
+					//console.log(info[i].link);
+				//}
+				
+				user.msg = "<img src='"+info[0].images.low_resolution.url+"' class='pointer' />";
+				console.log(user.msg);
+				socket.emit('chatMessage', user);
+			}
+		});		
+	});
+
+	// cancel instagram view
+	$(document).on("click", "#overlay", function() {
+		$(this).empty();
+		$(this).css("display", "none");
+	});
+
+
 	/******************************
 			animation events
 	******************************/
@@ -242,34 +285,12 @@ $(document).ready(function() {
 
 
 //////////// need to add //////////////////
-
-// post random instagram picture
-
-
-var api = "https://api.instagram.com/v1/media/popular?client_id=21735ffe9b94435f9cdb11f00935e269";
-
-// ajax call returns 20 most popular instagram posts
-$.ajax({
-	type: "GET",
-	dataType: "jsonp",
-	cache: false,
-	url: api,
-	success: function(data) {
-		var info = data.data;
-		console.log(info);
-		
-		for (var i=0;i<info.length;i++) {
-			console.log(info[i].link);
-		}
-
-	}
-});
-
-
+/*
 // scroll up button: animation duartion should be dynamic
+	also not showing up in chrome
 // post random tweet
-
+// close chat tab button
 // font options???
-
+*/
 
 
