@@ -18,12 +18,20 @@
 /* small */
 @media screen and (max-width: 767px) {
 	#chatLogin {
-		width: 75%;
+		width: 400px;
 	}
+	
+	#chatLogin li:hover::after {	
+		left: 125px;	/* (400-150) / */ 
+	}	
 }
 
 @media screen and (max-width: 480px) {
 	#chatLogin {
-		width: 100%;
+		width: 300px;
+	}
+
+	#chatLogin li:hover::after {	
+		left: 75px;  /* 300 - 150 / 2 */
 	}
 }

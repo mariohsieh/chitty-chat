@@ -214,7 +214,7 @@ $(document).ready(function() {
 
 	// display scroll button 
 	$(window).scroll(function() {
-		if ($("body").scrollTop() != 0)
+		if ($("html, body").scrollTop() != 0)
 			$("#scrollBtn").css("display", "block");
 		else
 			$("#scrollBtn").css("display", "none");
@@ -242,9 +242,34 @@ $(document).ready(function() {
 
 
 //////////// need to add //////////////////
-/*
 
--scroll to top button
+// post random instagram picture
 
-*/ 
+
+var api = "https://api.instagram.com/v1/media/popular?client_id=21735ffe9b94435f9cdb11f00935e269";
+
+// ajax call returns 20 most popular instagram posts
+$.ajax({
+	type: "GET",
+	dataType: "jsonp",
+	cache: false,
+	url: api,
+	success: function(data) {
+		var info = data.data;
+		console.log(info);
+		
+		for (var i=0;i<info.length;i++) {
+			console.log(info[i].link);
+		}
+
+	}
+});
+
+
+// scroll up button: animation duartion should be dynamic
+// post random tweet
+
+// font options???
+
+
 
