@@ -35,7 +35,9 @@ $(document).ready(function() {
 	}	
 
 	function scrollDown() {
-		$("html, body").animate({scrollTop: $(document).height()-$(window).height()}, 750);
+		var height = $(document).height();		
+		var scrollTime = .6*height;		
+		$("html, body").animate({scrollTop: $(document).height()-$(window).height()}, scrollTime);
 	}
 	
 	
@@ -215,11 +217,10 @@ $(document).ready(function() {
 
 	// display scroll up button on window scroll down
 	$(window).scroll(function() {
-		if ($("html, body").scrollTop() != 0)
+		if ($("html").scrollTop() != 0 || $("body").scrollTop() != 0)
 			$("#scrollBtn").css("display", "block");
 		else
 			$("#scrollBtn").css("display", "none");
-
 		//console.log(window.screen.top);
 		//console.log($("body").scrollTop());
 	});
@@ -296,8 +297,7 @@ $(document).ready(function() {
 
 //////////// need to add //////////////////
 /*
-// scroll up button: animation duartion should be dynamic
-	also not showing up in chrome
+// scroll up button: not showing up in chrome
 // add enter key submit
 // add <user> is typing... functionality  
 // post random tweet
