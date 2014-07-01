@@ -40,6 +40,15 @@ $(document).ready(function() {
 		$("html, body").animate({scrollTop: $(document).height()-$(window).height()}, scrollTime);
 	}
 	
+	function sendMessage() {
+		user.msg = $('footer textarea').val().trim();
+		if (user.msg != '') {
+			// emit message to server
+			socket.emit('chatMessage', user);
+			// clear input box after send
+			$('footer textarea').val('');
+		}		
+	}
 	
 	/******************************
 			socket events
@@ -225,15 +234,16 @@ $(document).ready(function() {
 		//console.log($("body").scrollTop());
 	});
 
-	// send message
+	// send message on button click and enter key press
 	$(document).on("click", "#btnSubmit", function() {
-		user.msg = $('footer textarea').val().trim();
-		if (user.msg != '') {
-			// emit message to server
-			socket.emit('chatMessage', user);
-			// clear input box after send
-			$('footer textarea').val('');
-		}
+		sendMessage();
+	});
+	$(document).on("keyup","footer textarea",function(evt) {
+		var keyCode = evt.keyCode || evt.which;
+
+		if (keyCode == '13' && !evt.shiftKey)
+			//console.log('submit');
+			sendMessage();
 	});
 	
 	// post random instagram
@@ -274,6 +284,25 @@ $(document).ready(function() {
 		}
 	});
 
+	// post random tweet
+	$(document).on("click", "#btnTwitter", function() {
+		
+		// code to generate random user id
+		
+		// store twitter api into variable
+		var api = "https://api.twitter.com/1.1/statuses/show.json?id=1692838136";
+		// api call
+		$.ajax({
+			type: "GET",
+			dataType: "jsonp",
+			cache: false,
+			url: api,
+			success: function(data) {
+				console.log(data);
+			}
+		});	
+	});
+
 
 	/******************************
 			animation events
@@ -297,16 +326,25 @@ $(document).ready(function() {
 
 //////////// need to add //////////////////
 /*
-// scroll up button: not showing up in chrome
-// add enter key submit
-// add <user> is typing... functionality  
-// post random tweet
-// close chat tab button
-// font options
+ add enter key submit
+ add <user> is typing... functionality  
+ post random tweet
+ close chat tab button
+ font options
 		-color change
 		-font size
 		-bold & italic
-	-add profile information
+ add profile information
+ 
+ optional...
+ switch to .getJSON("addy", function(data) {
+	 code
+	 .done(function(data) {
+	});
+	 .fail(function(data) {
+	 
+	});
+ 
 */
 
 
