@@ -195,7 +195,10 @@ $(document).ready(function() {
 
 	// scroll to top
 	$(document).on("click", "#scrollBtn", function() {
-		$("html, body").animate({scrollTop: 0}, 1000);
+		var height = $(document).height();
+		console.log(height);		
+		var scrollTime = .6*height;
+		$("html, body").animate({scrollTop: 0}, scrollTime);
 	});
 	
 /*
@@ -259,10 +262,15 @@ $(document).ready(function() {
 		});		
 	});
 
-	// cancel instagram view
-	$(document).on("click", "#overlay", function() {
-		$(this).empty();
-		$(this).css("display", "none");
+	// cancel instagram view & hide overlay
+	$(document).on("click", "#overlay", function(evt) {
+		var target = evt.target.localName;
+		console.log(target);
+		
+		if (target == "section") {
+			$(this).empty();
+			$(this).css("display", "none");
+		}
 	});
 
 
@@ -280,6 +288,8 @@ $(document).ready(function() {
 		}
 		
 	});
+
+
 	
 });
 
@@ -288,9 +298,15 @@ $(document).ready(function() {
 /*
 // scroll up button: animation duartion should be dynamic
 	also not showing up in chrome
+// add enter key submit
+// add <user> is typing... functionality  
 // post random tweet
 // close chat tab button
-// font options???
+// font options
+		-color change
+		-font size
+		-bold & italic
+	-add profile information
 */
 
 
