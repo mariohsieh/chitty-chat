@@ -181,7 +181,7 @@ $(document).ready(function() {
 	});
 	
 	// switch to chat
-	$(document).on("click", "#chatMenu li", function() {
+	$(document).on("mouseup", "#chatMenu li", function(evt) {
 		var chosen = $(this).text();
 		$("#chatMenu li").removeClass("active");
 		$(this).addClass("active");
@@ -194,6 +194,12 @@ $(document).ready(function() {
 		else
 			delete user.target;
 		//console.log(user);
+		
+		// close private tab and chat 
+		if (evt.which=='2') {
+			$("#"+chosen+"Tab").remove();
+			$("#"+chosen+"Chat").remove();
+		}
 	});
 
 	// view instagram photo
@@ -234,10 +240,11 @@ $(document).ready(function() {
 		//console.log($("body").scrollTop());
 	});
 
-	// send message on button click and enter key press
+	// send message on button click
 	$(document).on("click", "#btnSubmit", function() {
 		sendMessage();
 	});
+	// send message on enter key press
 	$(document).on("keyup","footer textarea",function(evt) {
 		var keyCode = evt.keyCode || evt.which;
 
@@ -260,12 +267,7 @@ $(document).ready(function() {
 			url: api,
 			success: function(data) {
 				var info = data.data;
-				console.log(info);
-				
-				//for (var i=0;i<info.length;i++) {
-					//console.log(info[i].link);
-				//}
-				
+				//console.log(info);				
 				user.msg = "<img src='"+info[0].images.low_resolution.url+"' class='pointer' />";
 				console.log(user.msg);
 				socket.emit('chatMessage', user);
@@ -283,7 +285,7 @@ $(document).ready(function() {
 			$(this).css("display", "none");
 		}
 	});
-
+/*
 	// post random tweet
 	$(document).on("click", "#btnTwitter", function() {
 		
@@ -302,7 +304,7 @@ $(document).ready(function() {
 			}
 		});	
 	});
-
+*/
 
 	/******************************
 			animation events
@@ -316,35 +318,7 @@ $(document).ready(function() {
 			$("footer > i").css("display", "inherit");
 			$("footer > section").css("display", "none");
 		}
-		
 	});
-
-
-	
 });
-
-
-//////////// need to add //////////////////
-/*
- add enter key submit
- add <user> is typing... functionality  
- post random tweet
- close chat tab button
- font options
-		-color change
-		-font size
-		-bold & italic
- add profile information
- 
- optional...
- switch to .getJSON("addy", function(data) {
-	 code
-	 .done(function(data) {
-	});
-	 .fail(function(data) {
-	 
-	});
- 
-*/
 
 
